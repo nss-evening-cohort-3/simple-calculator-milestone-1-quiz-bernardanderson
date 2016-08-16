@@ -10,27 +10,33 @@ namespace SimpleCalculator
     {
         static void Main(string[] args)
         {
-            int currentCommandCount = 0;
+            int currentCommandCount = 0, firstInteger, secondInteger;
+            char userOperation;
             string userInputFromCommandPrompt;
-            int firstNumericTerm;
-            int secondNumericTerm;
-            char operatorFromUserInput;
 
-        // Creates a new instance of the Expressions class to give non-static access to the methods
-           Expressions newUserCalcInstance = new Expressions();
+            // Creates a new instance of the Expressions class to give non-static access to the methods
+            Expressions newUserCalcInstance = new Expressions();
 
             while (true)
             {
-                Console.Write($"[{ currentCommandCount }] > ");
+                Console.Write($"[{ currentCommandCount }]> ");
                 userInputFromCommandPrompt = Console.ReadLine();
 
-                if (newUserCalcInstance.CheckUserWantsToExit(userInputFromCommandPrompt))
+                if (newUserCalcInstance.CheckUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
                 {
+                    Console.WriteLine("Bye!!!");
                     break;
                 }
 
                 currentCommandCount++;
-                newUserCalcInstance.ParseUserInput();
+
+                if (newUserCalcInstance.CheckExpressionType(userInputFromCommandPrompt).Value)
+                {
+                }
+                else
+                {
+                    Console.WriteLine("     Error!!");
+                };
             }
         }
     }
