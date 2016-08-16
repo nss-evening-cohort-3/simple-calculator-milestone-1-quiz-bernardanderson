@@ -32,6 +32,7 @@ namespace SimpleCalculator
 
                 if (newUserCalcInstance.CheckExpressionType(userInputFromCommandPrompt).Value)
                 {
+
                 }
                 else
                 {
