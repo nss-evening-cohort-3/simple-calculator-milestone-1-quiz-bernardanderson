@@ -17,14 +17,15 @@ namespace SimpleCalculator
             KeyValuePair<int, bool> matchedRegExStringAndValidity; // This holds any matched RegEx array element and if a string was actually matched!
 
             // Creates a new instance of the Expressions class to give non-static access to the methods
-            Expressions newUserCalcInstance = new Expressions();
+            Expressions newUserExpression = new Expressions();
+            Evaluation newUserEvaluation = new Evaluation();
 
             while (true)
             {
                 Console.Write($"[{ currentCommandCount }]> ");
                 userInputFromCommandPrompt = Console.ReadLine();
 
-                if (newUserCalcInstance.CheckIfUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
+                if (newUserExpression.CheckIfUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
                 {
                     Console.WriteLine("Bye!!!");
                     break;
@@ -32,14 +33,12 @@ namespace SimpleCalculator
 
                 currentCommandCount++;
 
-                matchedRegExStringAndValidity = newUserCalcInstance.CheckExpressionType(userInputFromCommandPrompt);
+                matchedRegExStringAndValidity = newUserExpression.CheckExpressionType(userInputFromCommandPrompt);
 
                 if (matchedRegExStringAndValidity.Value) // Looks to see if a RegEx was matched before parsing.
                 {
-                    userIntegersAndOperation = newUserCalcInstance.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
-
-
-
+                    userIntegersAndOperation = newUserExpression.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
+                    Console.WriteLine($"     = {newUserEvaluation.Evaluate(userIntegersAndOperation)}");
                 }
                 else
                 {
