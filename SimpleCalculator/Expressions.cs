@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,11 @@ namespace SimpleCalculator
     {
         // These are the lists of Regular Expressions for the different types of operation formats the user can enter
         string[] regularExpressions = new[] {
-            @"^\s*[-|\+]{0,1}\s*\d+\s*[\+\-\/\*%]\s*[-|\+]{0,1}\s*\d+\s*$", // Number Operation Number
-            @"^\s*[a-zA-Z]\s*=\s*[-|\+]{0,1}\d+\s*$", // Constant Equals Number
-            @"^\s*[a-zA-Z]\s*[\+\-\/\*%]{1}\s*[-|\+]{0,1}\d+\s*$", // Constant Operation Number
-            @"^\s*[-|\+]{0,1}\d+\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$", // Number Operation Constant
-            @"^\s*[a-zA-Z]{1}\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$" // Constant Operation Constant
+            @"^\s*([-|\+]{0,1}\d+)\s*([\+\-\/\*%])\s*([-|\+]{0,1}\d+)\s*$", // Number Operation Number ***
+            @"^\s*[a-zA-Z]\s*=\s*[-|\+]{0,1}\d+\s*$",                       // Constant Equals Number
+            @"^\s*[a-zA-Z]\s*[\+\-\/\*%]{1}\s*[-|\+]{0,1}\d+\s*$",          // Constant Operation Number
+            @"^\s*[-|\+]{0,1}\d+\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$",       // Number Operation Constant
+            @"^\s*[a-zA-Z]{1}\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$"           // Constant Operation Constant
         };
 
         public bool CheckUserWantsToExit(string sentUserInputFromCommandPrompt)
@@ -39,16 +40,11 @@ namespace SimpleCalculator
             return new KeyValuePair<int, bool>(-1, false);
         }
 
-        public int ParseUserInput(string sentUserInputFromCommandPrompt, string sentMatchedRegExPattern)
+        public string[] ParseUserInput(string sentUserInputFromCommandPrompt, int sentMatchedRegExElementNumber)
         {
-            //string[] parsedUserInput = new string[3];
-            //int newValue = 0;
+            Match matchedFields = new Regex(regularExpressions[sentMatchedRegExElementNumber]).Match(sentUserInputFromCommandPrompt);
 
-            //bool firstNumber = Int32.TryParse(new Regex(@"[-|\+]*\d+").Match(sentUserInputFromCommandPrompt).ToString(), out newValue);
-
-            //Console.WriteLine(firstNumber);
-
-            return newValue;
+            return new string[] { matchedFields.Groups[1].ToString(), matchedFields.Groups[2].ToString(), matchedFields.Groups[3].ToString() } ;
         }
 
 
