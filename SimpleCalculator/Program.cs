@@ -24,7 +24,7 @@ namespace SimpleCalculator
                 Console.Write($"[{ currentCommandCount }]> ");
                 userInputFromCommandPrompt = Console.ReadLine();
 
-                if (newUserCalcInstance.CheckUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
+                if (newUserCalcInstance.CheckIfUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
                 {
                     Console.WriteLine("Bye!!!");
                     break;
@@ -37,16 +37,14 @@ namespace SimpleCalculator
                 if (matchedRegExStringAndValidity.Value) // Looks to see if a RegEx was matched before parsing.
                 {
                     userIntegersAndOperation = newUserCalcInstance.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
+
+
+
                 }
                 else
                 {
                     Console.WriteLine("     Error!!");
                 };
-
-                    Console.WriteLine(userIntegersAndOperation[0]);
-                    Console.WriteLine(userIntegersAndOperation[1]);
-                    Console.WriteLine(userIntegersAndOperation[2]);
-
             }
         }
     }
