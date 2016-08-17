@@ -9,45 +9,40 @@ namespace SimpleCalculator
 {
     class Expressions
     {
+        // These are the lists of Regular Expressions for the different types of operation formats the user can enter
+        string[] regularExpressions = new[] {
+            @"^\s*[-|\+]{0,1}\s*\d+\s*[\+\-\/\*%]\s*[-|\+]{0,1}\s*\d+\s*$", // Number Operation Number
+            @"^\s*[a-zA-Z]\s*=\s*[-|\+]{0,1}\d+\s*$", // Constant Equals Number
+            @"^\s*[a-zA-Z]\s*[\+\-\/\*%]{1}\s*[-|\+]{0,1}\d+\s*$", // Constant Operation Number
+            @"^\s*[-|\+]{0,1}\d+\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$", // Number Operation Constant
+            @"^\s*[a-zA-Z]{1}\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$" // Constant Operation Constant
+        };
+
         public bool CheckUserWantsToExit(string sentUserInputFromCommandPrompt)
         {
             if (sentUserInputFromCommandPrompt.ToLower() == "quit" | sentUserInputFromCommandPrompt.ToLower() == "exit")
             {
                 return true;
-            } else
-            {
-                return false;
-            }
+            } 
+            return false;
         }
 
-        public KeyValuePair<string, bool> CheckExpressionType(string sentUserInputFromCommandPrompt)
+        public KeyValuePair<int, bool> CheckExpressionType(string sentUserInputFromCommandPrompt)
         {
-            if (new Regex(@"^\s*[-|\+]{0,1}\s*\d+\s*[\+\-\/\*%]\s*[-|\+]{0,1}\s*\d+\s*$").IsMatch(sentUserInputFromCommandPrompt)) // Checks for a "number operation number"  
+            for (int i = 0; i < regularExpressions.Length; i++)
             {
-                return new KeyValuePair<string, bool> ("NON", true);
+                if (new Regex(regularExpressions[i]).IsMatch(sentUserInputFromCommandPrompt)) // Cycles through all Regular Expression for a match  
+                {
+                    return new KeyValuePair<int, bool> (i, true);
+                }
             }
-            else if (new Regex(@"^\s*[a-zA-Z]\s*=\s*[-|\+]{0,1}\d+\s*$").IsMatch(sentUserInputFromCommandPrompt)) // Checks for a "const = number"
-            {
-                return new KeyValuePair<string, bool>("CEN", true);
-            }
-            else if (new Regex(@"^\s*[a-zA-Z]\s*[\+\-\/\*%]{1}\s*[-|\+]{0,1}\d+\s*$").IsMatch(sentUserInputFromCommandPrompt)) // Check for an "const operation number"
-            {
-                return new KeyValuePair<string, bool>("CON", true);
-            }
-            else if (new Regex(@"^\s*[-|\+]{0,1}\d+\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$").IsMatch(sentUserInputFromCommandPrompt)) // Check for an "number operation const" 
-            {
-                return new KeyValuePair<string, bool>("NOC", true);
-            } else if (new Regex(@"^\s*[a-zA-Z]{1}\s*[\+\-\/\*%]{1}\s*[a-zA-Z]{1}\s*$").IsMatch(sentUserInputFromCommandPrompt)) // This is "const operation const" 
-            {
-                return new KeyValuePair<string, bool>("COC", true);
-            }
-            return new KeyValuePair<string, bool>("NoMatch", false);
+            return new KeyValuePair<int, bool>(-1, false);
         }
 
-        public int ParseUserInput(string sentUserInputFromCommandPrompt)
+        public int ParseUserInput(string sentUserInputFromCommandPrompt, string sentMatchedRegExPattern)
         {
-            string[] parsedUserInput = new string[3];
-            int newValue = 0;
+            //string[] parsedUserInput = new string[3];
+            //int newValue = 0;
 
             //bool firstNumber = Int32.TryParse(new Regex(@"[-|\+]*\d+").Match(sentUserInputFromCommandPrompt).ToString(), out newValue);
 

@@ -11,8 +11,9 @@ namespace SimpleCalculator
         static void Main(string[] args)
         {
             int currentCommandCount = 0, firstInteger, secondInteger;
-            char userOperation;
+            string userOperation;
             string userInputFromCommandPrompt;
+            KeyValuePair<string, bool> matchedRegExStringAndValidity; // This holds the matched RegExString from the user input and if a string was actually matched!
 
             // Creates a new instance of the Expressions class to give non-static access to the methods
             Expressions newUserCalcInstance = new Expressions();
@@ -30,9 +31,11 @@ namespace SimpleCalculator
 
                 currentCommandCount++;
 
-                if (newUserCalcInstance.CheckExpressionType(userInputFromCommandPrompt).Value)
-                {
+                matchedRegExStringAndValidity = newUserCalcInstance.CheckExpressionType(userInputFromCommandPrompt);
 
+                if (matchedRegExStringAndValidity.Value) // Looks to see if a RegEx was matched before parsing.
+                {
+                    newUserCalcInstance.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
                 }
                 else
                 {
