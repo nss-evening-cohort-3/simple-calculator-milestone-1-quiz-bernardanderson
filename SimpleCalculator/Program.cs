@@ -36,27 +36,15 @@ namespace SimpleCalculator
                 //Checks and Parses the User String
                 userIntegersAndOperation = newUserExpression.CheckExpressionTypeAndParse(userInputFromCommandPrompt);
 
-                if (userIntegersAndOperation[0] == "true") // Looks to see if a RegEx was matched before parsing.
+                if (userIntegersAndOperation[0] == "success") // Looks to see if a RegEx was matched and parsed.
                 {
-                    //Determines the type of operation
-                    typeOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
+                    string resultOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
 
-                    if (typeOfOperation == "ConstantAssignment")
-                    {
-
-                    }
-                    else
-                    {
+                    Console.WriteLine(resultOfOperation);
                         //Evaluates the operation
-                        Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
-                    }
+                    //    Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
                 }
                 else
-                {
-                    typeOfOperation = "Error";
-                }
-
-                if (typeOfOperation == "Error")
                 {
                     Console.WriteLine("     Error!!");
                 }

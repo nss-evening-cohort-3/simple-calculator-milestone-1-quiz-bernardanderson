@@ -30,8 +30,7 @@ namespace SimpleCalculator
         }
 
         // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.
-        //  It returns which RegEx array element was matched and "true" meaning success.  If no match is made -1 along with "false" 
-        //  is sent.
+        //  If the match is made, the userInput is parsed and returned with a "success" or "failure" within a string array.
         public string[] CheckExpressionTypeAndParse(string sentUserInputFromCommandPrompt)
         {
             for (int i = 0; i < regularExpressions.Length; i++)
@@ -39,10 +38,10 @@ namespace SimpleCalculator
                 if (new Regex(regularExpressions[i]).IsMatch(sentUserInputFromCommandPrompt)) // Cycles through all Regular Expression for a match  
                 {
                     Match matchedFields = new Regex(regularExpressions[i]).Match(sentUserInputFromCommandPrompt);
-                    return new string[] { "true", matchedFields.Groups[1].ToString(), matchedFields.Groups[2].ToString(), matchedFields.Groups[3].ToString() };
+                    return new string[] { "success", matchedFields.Groups[1].ToString(), matchedFields.Groups[2].ToString(), matchedFields.Groups[3].ToString() };
                 }
             }
-            return new string[] { "false" };
+            return new string[] { "failure" };
         }
     }
 }

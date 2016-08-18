@@ -12,19 +12,28 @@ namespace SimpleCalculator
         int firstInteger;
         int secondInteger;
         char operationSymbol;
+        Constant newUserConstant = new Constant();
+
 
         //Checks the string[] to assign the correct values to the variables
         public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
         {
             int resultingParsedValue;
 
-            //Checks for a constant being assigned based on the parsed characters
+            //Checks for a constant being assigned based on the parsed characters (in the format of letter = number)
             if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]) &&
                 new Regex(@"=").IsMatch(sentIntegerAndOperationInfo[2]) &&
                 Int32.TryParse(sentIntegerAndOperationInfo[3], out resultingParsedValue)
                 )
             {
-                return "ConstantAssignment";
+                // Calls the Constant setting method
+                bool returnedResult = newUserConstant.assignConstantValue(sentIntegerAndOperationInfo[1], resultingParsedValue);
+
+                if (returnedResult)
+                {
+                    return $"     {sentIntegerAndOperationInfo[1]} set to {resultingParsedValue}";
+                }
+                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been used. Please choose another variable.";
             }
 
             //Looks at the first variable and assigns it appropriately
