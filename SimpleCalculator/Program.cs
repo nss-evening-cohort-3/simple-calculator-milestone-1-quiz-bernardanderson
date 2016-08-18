@@ -37,13 +37,22 @@ namespace SimpleCalculator
 
                 if (matchedRegExStringAndValidity.Value) // Looks to see if a RegEx was matched before parsing.
                 {
+                    //Parses the User String
                     userIntegersAndOperation = newUserExpression.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
-                    Console.WriteLine($"     = {newUserEvaluation.Evaluate(userIntegersAndOperation)}");
                 }
                 else
                 {
                     Console.WriteLine("     Error!!");
-                };
+                }
+
+                if (newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation))
+                {
+                    Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
+                }
+                else
+                {
+                    Console.WriteLine("     Error!!");
+                }
             }
         }
     }
