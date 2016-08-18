@@ -19,6 +19,7 @@ namespace SimpleCalculator
             @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$"              // Constant Operation Constant
         };
 
+        // This simply checks to see if the user typed either of the two termination commands
         public bool CheckIfUserWantsToExit(string sentUserInputFromCommandPrompt)
         {
             if (sentUserInputFromCommandPrompt.ToLower() == "quit" | sentUserInputFromCommandPrompt.ToLower() == "exit")
@@ -28,27 +29,20 @@ namespace SimpleCalculator
             return false;
         }
 
-        public KeyValuePair<int, bool> CheckExpressionType(string sentUserInputFromCommandPrompt)
+        // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.
+        //  It returns which RegEx array element was matched and "true" meaning success.  If no match is made -1 along with "false" 
+        //  is sent.
+        public string[] CheckExpressionTypeAndParse(string sentUserInputFromCommandPrompt)
         {
             for (int i = 0; i < regularExpressions.Length; i++)
             {
                 if (new Regex(regularExpressions[i]).IsMatch(sentUserInputFromCommandPrompt)) // Cycles through all Regular Expression for a match  
                 {
-                    return new KeyValuePair<int, bool> (i, true);
+                    Match matchedFields = new Regex(regularExpressions[i]).Match(sentUserInputFromCommandPrompt);
+                    return new string[] { "true", matchedFields.Groups[1].ToString(), matchedFields.Groups[2].ToString(), matchedFields.Groups[3].ToString() };
                 }
             }
-            return new KeyValuePair<int, bool>(-1, false);
+            return new string[] { "false" };
         }
-
-        public string[] ParseUserInput(string sentUserInputFromCommandPrompt, int sentMatchedRegExElementNumber)
-        {
-            // Match builds an pseduo string[] where the matched expression is element[0] and each subsequent RegEx grouping are the following elements 
-            Match matchedFields = new Regex(regularExpressions[sentMatchedRegExElementNumber]).Match(sentUserInputFromCommandPrompt);
-
-            return new string[] { matchedFields.Groups[1].ToString(), matchedFields.Groups[2].ToString(), matchedFields.Groups[3].ToString() } ;
-        }
-
-
-
     }
 }

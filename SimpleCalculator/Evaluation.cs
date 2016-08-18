@@ -19,20 +19,20 @@ namespace SimpleCalculator
             int resultingParsedValue;
 
             //Checks for a constant being assigned based on the parsed characters
-            if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0]) &&
-                new Regex(@"=").IsMatch(sentIntegerAndOperationInfo[1]) &&
-                Int32.TryParse(sentIntegerAndOperationInfo[2], out resultingParsedValue)
+            if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]) &&
+                new Regex(@"=").IsMatch(sentIntegerAndOperationInfo[2]) &&
+                Int32.TryParse(sentIntegerAndOperationInfo[3], out resultingParsedValue)
                 )
             {
                 return "ConstantAssignment";
             }
 
             //Looks at the first variable and assigns it appropriately
-            if (Int32.TryParse(sentIntegerAndOperationInfo[0], out resultingParsedValue)) 
+            if (Int32.TryParse(sentIntegerAndOperationInfo[1], out resultingParsedValue)) 
             {
                 firstInteger = resultingParsedValue;
             }
-            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0]))
+            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]))
             {
                 // firstInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
             }
@@ -42,11 +42,11 @@ namespace SimpleCalculator
             }
 
             //Looks at the second variable and assigns it appropriately
-            if (Int32.TryParse(sentIntegerAndOperationInfo[2], out resultingParsedValue))
+            if (Int32.TryParse(sentIntegerAndOperationInfo[3], out resultingParsedValue))
             {
                 secondInteger = resultingParsedValue;
             }
-            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[2]))
+            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[3]))
             {
                 // secondInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
             }
@@ -55,9 +55,9 @@ namespace SimpleCalculator
                 return "Error";
             }
 
-            if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[1]))
+            if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
-                operationSymbol = sentIntegerAndOperationInfo[1][0];
+                operationSymbol = sentIntegerAndOperationInfo[2][0];
                 return "AllGood";
             } 
             else
