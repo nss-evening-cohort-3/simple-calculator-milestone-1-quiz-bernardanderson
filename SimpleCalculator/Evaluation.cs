@@ -9,15 +9,14 @@ namespace SimpleCalculator
 {
     class Evaluation
     {
-        int firstInteger;
-        int secondInteger;
-        char operationSymbol;
         Constant newUserConstant = new Constant();
+        LastEntries newUserLastEntry = new LastEntries();
 
         //Checks the string[] to assign the correct values to the variables
         public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
         {
-            int resultingParsedValue;
+            int firstInteger = 0, secondInteger = 0, resultingParsedValue = 0;
+            char operationSymbol;
 
             //Checks for a constant being assigned based on the parsed characters (in the format of letter = number)
             if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]) &&
@@ -60,7 +59,7 @@ namespace SimpleCalculator
                 secondInteger = resultingParsedValue;
             }
             else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[3]))
-                {
+            {
                 KeyValuePair<bool, int> secondIntegerReturnedResult = newUserConstant.ReturnConstantValue(sentIntegerAndOperationInfo[3]);
 
                 if (secondIntegerReturnedResult.Key)
@@ -72,13 +71,12 @@ namespace SimpleCalculator
                     return $"     Error!! The constant \"{sentIntegerAndOperationInfo[3]}\" does not exist!";
                 }
             }
-            ///////////
+
             if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
-                Evaluate();
 
-                return $"    = {Evaluate()}";
+                return $"    = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
             } 
             else
             {
@@ -87,26 +85,26 @@ namespace SimpleCalculator
         }
 
         //This evaluates the expression after the check completes
-        public string Evaluate()
+        public string Evaluate(char sentOperationSymbol, int sentFirstInteger, int sentSecondInteger)
         {
             int evaluatedOperationValue;
 
-            switch (operationSymbol)
+            switch (sentOperationSymbol)
             {
                 case '+':
-                    evaluatedOperationValue = firstInteger + secondInteger;
+                    evaluatedOperationValue = sentFirstInteger + sentSecondInteger;
                     break;
                 case '-':
-                    evaluatedOperationValue = firstInteger - secondInteger;
+                    evaluatedOperationValue = sentFirstInteger - sentSecondInteger;
                     break;
                 case '*':
-                    evaluatedOperationValue = firstInteger * secondInteger;
+                    evaluatedOperationValue = sentFirstInteger * sentSecondInteger;
                     break;
                 case '/':
-                    evaluatedOperationValue = firstInteger / secondInteger;
+                    evaluatedOperationValue = sentFirstInteger / sentSecondInteger;
                     break;
                 case '%':
-                    evaluatedOperationValue = firstInteger % secondInteger;
+                    evaluatedOperationValue = sentFirstInteger % sentSecondInteger;
                     break;
                 default:
                     return "     Error!! Evaluation Failed!!";
