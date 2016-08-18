@@ -14,8 +14,7 @@ namespace SimpleCalculator
             int currentCommandCount = 0;
             string userInputFromCommandPrompt;
             string typeOfOperation;
-            string[] userIntegersAndOperation = { "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
-            KeyValuePair<int, bool> matchedRegExStringAndValidity; // This holds any matched RegEx array element and if a string was actually matched!
+            string[] userIntegersAndOperation = { "", "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
 
             // Creates a new instance of the Expressions class to give non-static access to the methods
             Expressions newUserExpression = new Expressions();
@@ -34,30 +33,16 @@ namespace SimpleCalculator
 
                 currentCommandCount++;
 
-                matchedRegExStringAndValidity = newUserExpression.CheckExpressionType(userInputFromCommandPrompt);
+                //Checks and Parses the User String
+                userIntegersAndOperation = newUserExpression.CheckExpressionTypeAndParse(userInputFromCommandPrompt);
 
-                if (matchedRegExStringAndValidity.Value) // Looks to see if a RegEx was matched before parsing.
+                // Looks to see if a RegEx was matched and parsed.
+                if (userIntegersAndOperation[0] == "success") 
                 {
-                    //Parses the User String
-                    userIntegersAndOperation = newUserExpression.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
-                    //Determines the type of operation
-                    typeOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
-                    if (typeOfOperation == "ConstantAssignment")
-                    {
-
-                    }
-                    else
-                    {
-                        //Evaluates the operation
-                        Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
-                    }
+                    string resultOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
+                    Console.WriteLine(resultOfOperation);
                 }
                 else
-                {
-                    typeOfOperation = "Error";
-                }
-
-                if (typeOfOperation == "Error")
                 {
                     Console.WriteLine("     Error!!");
                 }
