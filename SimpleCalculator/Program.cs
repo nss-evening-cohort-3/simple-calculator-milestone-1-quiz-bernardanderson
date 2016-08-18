@@ -13,6 +13,7 @@ namespace SimpleCalculator
         {
             int currentCommandCount = 0;
             string userInputFromCommandPrompt;
+            string typeOfOperation;
             string[] userIntegersAndOperation = { "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
             KeyValuePair<int, bool> matchedRegExStringAndValidity; // This holds any matched RegEx array element and if a string was actually matched!
 
@@ -39,17 +40,24 @@ namespace SimpleCalculator
                 {
                     //Parses the User String
                     userIntegersAndOperation = newUserExpression.ParseUserInput(userInputFromCommandPrompt, matchedRegExStringAndValidity.Key);
+                    //Determines the type of operation
+                    typeOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
+                    if (typeOfOperation == "ConstantAssignment")
+                    {
+
+                    }
+                    else
+                    {
+                        //Evaluates the operation
+                        Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("     Error!!");
+                    typeOfOperation = "Error";
                 }
 
-                if (newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation))
-                {
-                    Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
-                }
-                else
+                if (typeOfOperation == "Error")
                 {
                     Console.WriteLine("     Error!!");
                 }

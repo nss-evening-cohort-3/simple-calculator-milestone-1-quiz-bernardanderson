@@ -13,45 +13,56 @@ namespace SimpleCalculator
         int secondInteger;
         char operationSymbol;
 
-        //Rechecks the string[] and assigns the correct variables
-        public bool CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
+        //Checks the string[] to assign the correct values to the variables
+        public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
         {
             int resultingParsedValue;
 
+            //Checks for a constant being assigned based on the parsed characters
+            if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0]) &&
+                new Regex(@"=").IsMatch(sentIntegerAndOperationInfo[1]) &&
+                Int32.TryParse(sentIntegerAndOperationInfo[2], out resultingParsedValue)
+                )
+            {
+                return "ConstantAssignment";
+            }
+
+            //Looks at the first variable and assigns it appropriately
             if (Int32.TryParse(sentIntegerAndOperationInfo[0], out resultingParsedValue)) 
             {
                 firstInteger = resultingParsedValue;
             }
-            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0])              )
+            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0]))
             {
                 // firstInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
             }
             else
             {
-                return false;
+                return "Error";
             }
-            
+
+            //Looks at the second variable and assigns it appropriately
             if (Int32.TryParse(sentIntegerAndOperationInfo[2], out resultingParsedValue))
             {
                 secondInteger = resultingParsedValue;
             }
-            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[0]))
+            else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 // secondInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
             }
             else
             {
-                return false;
+                return "Error";
             }
 
-            if (new Regex(@"[\+\-\/\*%=]").IsMatch(sentIntegerAndOperationInfo[1]) && true ) //'true' The Constant doesn't exist yet
+            if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[1]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[1][0];
-                return true;
+                return "AllGood";
             } 
             else
             {
-                return false;
+                return "Error";
             }
         }
 
