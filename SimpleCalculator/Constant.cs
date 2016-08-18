@@ -31,7 +31,7 @@ namespace SimpleCalculator
 
         // This sets the constant/value pair in the constantList dictionary.  If the dictionary already contains the letter,
         //  then a "false" is returned for a fail. Otherwise a "true" is returned saying that the constant was successfully set.
-        public bool assignConstantValue(string sentConstantLetter, int sentConstantValue)
+        public bool AssignConstantValue(string sentConstantLetter, int sentConstantValue)
         {
             bool wasTheSettingSuccessful;
 

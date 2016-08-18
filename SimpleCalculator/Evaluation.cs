@@ -14,7 +14,6 @@ namespace SimpleCalculator
         char operationSymbol;
         Constant newUserConstant = new Constant();
 
-
         //Checks the string[] to assign the correct values to the variables
         public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
         {
@@ -27,27 +26,32 @@ namespace SimpleCalculator
                 )
             {
                 // Calls the Constant setting method
-                bool returnedResult = newUserConstant.assignConstantValue(sentIntegerAndOperationInfo[1], resultingParsedValue);
+                bool returnedResult = newUserConstant.AssignConstantValue(sentIntegerAndOperationInfo[1], resultingParsedValue);
 
                 if (returnedResult)
                 {
                     return $"     {sentIntegerAndOperationInfo[1]} set to {resultingParsedValue}";
                 }
-                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been used. Please choose another variable.";
+                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose another variable.";
             }
 
             //Looks at the first variable and assigns it appropriately
-            if (Int32.TryParse(sentIntegerAndOperationInfo[1], out resultingParsedValue)) 
+            if (Int32.TryParse(sentIntegerAndOperationInfo[1], out resultingParsedValue))
             {
                 firstInteger = resultingParsedValue;
             }
             else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]))
             {
-                // firstInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
-            }
-            else
-            {
-                return "Error";
+                KeyValuePair<bool, int> firstIntegerReturnedResult = newUserConstant.ReturnConstantValue(sentIntegerAndOperationInfo[1]);
+
+                if (firstIntegerReturnedResult.Key)
+                {
+                    firstInteger = firstIntegerReturnedResult.Value;
+                }
+                else
+                {
+                    return $"     Error!! The constant \"{sentIntegerAndOperationInfo[1]}\" does not exist!";
+                }
             }
 
             //Looks at the second variable and assigns it appropriately
@@ -56,56 +60,60 @@ namespace SimpleCalculator
                 secondInteger = resultingParsedValue;
             }
             else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[3]))
-            {
-                // secondInteger = Constants.ConstantLibrary(sentIntegerAndOperationInfo[0]);
-            }
-            else
-            {
-                return "Error";
-            }
+                {
+                KeyValuePair<bool, int> secondIntegerReturnedResult = newUserConstant.ReturnConstantValue(sentIntegerAndOperationInfo[3]);
 
+                if (secondIntegerReturnedResult.Key)
+                {
+                    secondInteger = secondIntegerReturnedResult.Value;
+                }
+                else
+                {
+                    return $"     Error!! The constant \"{sentIntegerAndOperationInfo[3]}\" does not exist!";
+                }
+            }
+            ///////////
             if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
-                return "AllGood";
+                Evaluate();
+
+                return $"    = {Evaluate()}";
             } 
             else
             {
-                return "Error";
+                return "     Error!! There is something wrong with your equation!";
             }
         }
 
         //This evaluates the expression after the check completes
         public int Evaluate()
         {
-            int evaluatedOperation;
+            int evaluatedOperationValue;
 
             switch (operationSymbol)
             {
                 case '+':
-                    evaluatedOperation = firstInteger + secondInteger;
+                    evaluatedOperationValue = firstInteger + secondInteger;
                     break;
                 case '-':
-                    evaluatedOperation = firstInteger - secondInteger;
+                    evaluatedOperationValue = firstInteger - secondInteger;
                     break;
                 case '*':
-                    evaluatedOperation = firstInteger * secondInteger;
+                    evaluatedOperationValue = firstInteger * secondInteger;
                     break;
                 case '/':
-                    evaluatedOperation = firstInteger / secondInteger;
+                    evaluatedOperationValue = firstInteger / secondInteger;
                     break;
                 case '%':
-                    evaluatedOperation = firstInteger % secondInteger;
-                    break;
-                case '=':
-                    evaluatedOperation = 0; //set the dictionary constant
+                    evaluatedOperationValue = firstInteger % secondInteger;
                     break;
                 default:
-                    evaluatedOperation = 0;
+                    evaluatedOperationValue = 0;
                     break;
             }
 
-            return evaluatedOperation;
+            return evaluatedOperationValue;
         }
 
     }

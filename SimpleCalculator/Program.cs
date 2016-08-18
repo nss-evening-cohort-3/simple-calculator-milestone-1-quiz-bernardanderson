@@ -36,13 +36,11 @@ namespace SimpleCalculator
                 //Checks and Parses the User String
                 userIntegersAndOperation = newUserExpression.CheckExpressionTypeAndParse(userInputFromCommandPrompt);
 
-                if (userIntegersAndOperation[0] == "success") // Looks to see if a RegEx was matched and parsed.
+                // Looks to see if a RegEx was matched and parsed.
+                if (userIntegersAndOperation[0] == "success") 
                 {
                     string resultOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
-
                     Console.WriteLine(resultOfOperation);
-                        //Evaluates the operation
-                    //    Console.WriteLine($"     = {newUserEvaluation.Evaluate()}");
                 }
                 else
                 {
