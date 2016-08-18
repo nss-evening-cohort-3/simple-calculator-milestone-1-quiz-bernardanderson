@@ -13,7 +13,6 @@ namespace SimpleCalculator
         {
             int currentCommandCount = 0;
             string userInputFromCommandPrompt;
-            string typeOfOperation;
             string[] userIntegersAndOperation = { "", "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
 
             // Creates a new instance of the Expressions class to give non-static access to the methods
@@ -27,7 +26,7 @@ namespace SimpleCalculator
 
                 if (newUserExpression.CheckIfUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
                 {
-                    Console.WriteLine("Bye!!!");
+                    Console.WriteLine("     Bye!!!");
                     break;
                 }
 
@@ -44,7 +43,7 @@ namespace SimpleCalculator
                 }
                 else
                 {
-                    Console.WriteLine("     Error!!");
+                    Console.WriteLine("     Error!! Invalid command format!!");
                 }
             }
         }

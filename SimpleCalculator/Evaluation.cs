@@ -30,7 +30,7 @@ namespace SimpleCalculator
 
                 if (returnedResult)
                 {
-                    return $"     {sentIntegerAndOperationInfo[1]} set to {resultingParsedValue}";
+                    return $"     \"{sentIntegerAndOperationInfo[1]}\" set to {resultingParsedValue}";
                 }
                 return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose another variable.";
             }
@@ -82,12 +82,12 @@ namespace SimpleCalculator
             } 
             else
             {
-                return "     Error!! There is something wrong with your equation!";
+                return "     Error!! Invalid command format!!";
             }
         }
 
         //This evaluates the expression after the check completes
-        public int Evaluate()
+        public string Evaluate()
         {
             int evaluatedOperationValue;
 
@@ -109,11 +109,9 @@ namespace SimpleCalculator
                     evaluatedOperationValue = firstInteger % secondInteger;
                     break;
                 default:
-                    evaluatedOperationValue = 0;
-                    break;
+                    return "     Error!! Evaluation Failed!!";
             }
-
-            return evaluatedOperationValue;
+            return evaluatedOperationValue.ToString();
         }
 
     }
