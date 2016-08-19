@@ -22,11 +22,7 @@ namespace SimpleCalculator
         // This simply checks to see if the user typed either of the two termination commands
         public bool CheckIfUserWantsToExit(string sentUserInputFromCommandPrompt)
         {
-            if (new Regex(@"^\s*quit\s*$|^\s*exit\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success)
-            {
-                return true;
-            } 
-            return false;
+            return new Regex(@"^\s*quit\s*$|^\s*exit\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success;
         }
 
         // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.

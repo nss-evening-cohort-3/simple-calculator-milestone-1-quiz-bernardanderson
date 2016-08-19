@@ -60,7 +60,6 @@ namespace SimpleCalculator
                     //  This is an "else" so any "last" or "lastq" commands don't get pushed into the last "stack" 
                     newUserLastEntry.SetLastCommandValues(userInputFromCommandPrompt, resultOfOperation);
                 }
-
                 Console.WriteLine(resultOfOperation);
             }
         }
