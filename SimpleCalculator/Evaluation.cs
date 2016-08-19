@@ -9,15 +9,13 @@ namespace SimpleCalculator
 {
     class Evaluation
     {
-        int firstInteger;
-        int secondInteger;
-        char operationSymbol;
         Constant newUserConstant = new Constant();
 
         //Checks the string[] to assign the correct values to the variables
         public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
         {
-            int resultingParsedValue;
+            int firstInteger = 0, secondInteger = 0, resultingParsedValue = 0;
+            char operationSymbol;
 
             //Checks for a constant being assigned based on the parsed characters (in the format of letter = number)
             if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[1]) &&
@@ -30,9 +28,9 @@ namespace SimpleCalculator
 
                 if (returnedResult)
                 {
-                    return $"     {sentIntegerAndOperationInfo[1]} set to {resultingParsedValue}";
+                    return $"     \"{sentIntegerAndOperationInfo[1]}\" set to {resultingParsedValue}";
                 }
-                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose another variable.";
+                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose different variable.";
             }
 
             //Looks at the first variable and assigns it appropriately
@@ -60,7 +58,7 @@ namespace SimpleCalculator
                 secondInteger = resultingParsedValue;
             }
             else if (new Regex(@"[A-Za-z]").IsMatch(sentIntegerAndOperationInfo[3]))
-                {
+            {
                 KeyValuePair<bool, int> secondIntegerReturnedResult = newUserConstant.ReturnConstantValue(sentIntegerAndOperationInfo[3]);
 
                 if (secondIntegerReturnedResult.Key)
@@ -72,48 +70,44 @@ namespace SimpleCalculator
                     return $"     Error!! The constant \"{sentIntegerAndOperationInfo[3]}\" does not exist!";
                 }
             }
-            ///////////
+
             if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
-                Evaluate();
-
-                return $"    = {Evaluate()}";
+                return $"     = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
             } 
             else
             {
-                return "     Error!! There is something wrong with your equation!";
+                return "     Error!! Invalid command format!!";
             }
         }
 
-        //This evaluates the expression after the check completes
-        public int Evaluate()
+        //This evaluates the expression after all checks complete
+        public string Evaluate(char sentOperationSymbol, int sentFirstInteger, int sentSecondInteger)
         {
             int evaluatedOperationValue;
 
-            switch (operationSymbol)
+            switch (sentOperationSymbol)
             {
                 case '+':
-                    evaluatedOperationValue = firstInteger + secondInteger;
+                    evaluatedOperationValue = sentFirstInteger + sentSecondInteger;
                     break;
                 case '-':
-                    evaluatedOperationValue = firstInteger - secondInteger;
+                    evaluatedOperationValue = sentFirstInteger - sentSecondInteger;
                     break;
                 case '*':
-                    evaluatedOperationValue = firstInteger * secondInteger;
+                    evaluatedOperationValue = sentFirstInteger * sentSecondInteger;
                     break;
                 case '/':
-                    evaluatedOperationValue = firstInteger / secondInteger;
+                    evaluatedOperationValue = sentFirstInteger / sentSecondInteger;
                     break;
                 case '%':
-                    evaluatedOperationValue = firstInteger % secondInteger;
+                    evaluatedOperationValue = sentFirstInteger % sentSecondInteger;
                     break;
                 default:
-                    evaluatedOperationValue = 0;
-                    break;
+                    return "     Error!! Evaluation Failed!!";
             }
-
-            return evaluatedOperationValue;
+            return evaluatedOperationValue.ToString();
         }
 
     }

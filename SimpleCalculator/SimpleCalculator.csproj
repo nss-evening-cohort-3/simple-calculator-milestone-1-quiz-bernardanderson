@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LastEntries.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Evaluation.cs" />
     <Compile Include="Expressions.cs" />

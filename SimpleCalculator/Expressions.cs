@@ -16,13 +16,13 @@ namespace SimpleCalculator
             @"^\s*([a-zA-Z])\s*(=)\s*([-|\+]{0,1}\d+)\s*$",                 // Constant Equals Number
             @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([-|\+]{0,1}\d+)\s*$",       // Constant Operation Number
             @"^\s*([-|\+]{0,1}\d+)\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$",       // Number Operation Constant
-            @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$"              // Constant Operation Constant
+            @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$",             // Constant Operation Constant
         };
 
         // This simply checks to see if the user typed either of the two termination commands
         public bool CheckIfUserWantsToExit(string sentUserInputFromCommandPrompt)
         {
-            if (sentUserInputFromCommandPrompt.ToLower() == "quit" | sentUserInputFromCommandPrompt.ToLower() == "exit")
+            if (new Regex(@"^\s*quit\s*$|^\s*exit\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success)
             {
                 return true;
             } 

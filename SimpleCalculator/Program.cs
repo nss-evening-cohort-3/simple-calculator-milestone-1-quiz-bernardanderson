@@ -13,21 +13,24 @@ namespace SimpleCalculator
         {
             int currentCommandCount = 0;
             string userInputFromCommandPrompt;
-            string typeOfOperation;
             string[] userIntegersAndOperation = { "", "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
+            string resultOfOperation = "     Nothing Yet!";
 
-            // Creates a new instance of the Expressions class to give non-static access to the methods
+            // Creates a new instance of the used classes to give non-static access to their methods
             Expressions newUserExpression = new Expressions();
             Evaluation newUserEvaluation = new Evaluation();
+            LastEntries newUserLastEntry = new LastEntries();
 
             while (true)
             {
                 Console.Write($"[{ currentCommandCount }]> ");
                 userInputFromCommandPrompt = Console.ReadLine();
 
-                if (newUserExpression.CheckIfUserWantsToExit(userInputFromCommandPrompt)) // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
+                // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
+                if (newUserExpression.CheckIfUserWantsToExit(userInputFromCommandPrompt)) 
                 {
-                    Console.WriteLine("Bye!!!");
+                    Console.WriteLine("     Bye!!!\n     (Press Return to Exit)");
+                    Console.ReadLine();
                     break;
                 }
 
@@ -39,13 +42,26 @@ namespace SimpleCalculator
                 // Looks to see if a RegEx was matched and parsed.
                 if (userIntegersAndOperation[0] == "success") 
                 {
-                    string resultOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
-                    Console.WriteLine(resultOfOperation);
+                    resultOfOperation = newUserEvaluation.CheckAndAssignSentStringArray(userIntegersAndOperation);
                 }
                 else
                 {
-                    Console.WriteLine("     Error!!");
+                    resultOfOperation = "     Error!! Invalid command format!!";
                 }
+
+                // Looks to see if either of the last/lastq commands was issued
+                if (newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Key)
+                {
+                    resultOfOperation = newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Value;
+                }
+                else
+                {
+                    // Assigns the submitted user operation, and reported commands to the "stack"
+                    //  This is an "else" so any "last" or "lastq" commands don't get pushed into the last "stack" 
+                    newUserLastEntry.SetLastCommandValues(userInputFromCommandPrompt, resultOfOperation);
+                }
+
+                Console.WriteLine(resultOfOperation);
             }
         }
     }
