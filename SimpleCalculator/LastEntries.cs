@@ -10,5 +10,16 @@ namespace SimpleCalculator
     {
         public string last { get; set; } = "Nothing Yet!!";
         public string lastq { get; set; } = "Nothing Yet!!";
+
+        public string OutputLastAnswer()
+        {
+            return $"     {last}";
+        }
+
+        public string OutputLastCommand()
+        {
+            return $"     {lastq}";
+
+        }
     }
 }

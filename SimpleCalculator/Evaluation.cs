@@ -10,7 +10,6 @@ namespace SimpleCalculator
     class Evaluation
     {
         Constant newUserConstant = new Constant();
-        LastEntries newUserLastEntry = new LastEntries();
 
         //Checks the string[] to assign the correct values to the variables
         public string CheckAndAssignSentStringArray(string[] sentIntegerAndOperationInfo)
@@ -31,7 +30,7 @@ namespace SimpleCalculator
                 {
                     return $"     \"{sentIntegerAndOperationInfo[1]}\" set to {resultingParsedValue}";
                 }
-                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose another variable.";
+                return $"     \"{sentIntegerAndOperationInfo[1]}\" has previously been set. Please choose different variable.";
             }
 
             //Looks at the first variable and assigns it appropriately
@@ -75,8 +74,7 @@ namespace SimpleCalculator
             if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
-
-                return $"    = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
+                return $"     = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
             } 
             else
             {
@@ -84,7 +82,7 @@ namespace SimpleCalculator
             }
         }
 
-        //This evaluates the expression after the check completes
+        //This evaluates the expression after all checks complete
         public string Evaluate(char sentOperationSymbol, int sentFirstInteger, int sentSecondInteger)
         {
             int evaluatedOperationValue;

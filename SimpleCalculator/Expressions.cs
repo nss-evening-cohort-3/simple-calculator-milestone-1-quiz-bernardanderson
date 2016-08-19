@@ -16,7 +16,7 @@ namespace SimpleCalculator
             @"^\s*([a-zA-Z])\s*(=)\s*([-|\+]{0,1}\d+)\s*$",                 // Constant Equals Number
             @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([-|\+]{0,1}\d+)\s*$",       // Constant Operation Number
             @"^\s*([-|\+]{0,1}\d+)\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$",       // Number Operation Constant
-            @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$"              // Constant Operation Constant
+            @"^\s*([a-zA-Z])\s*([\+\-\/\*%])\s*([a-zA-Z])\s*$",             // Constant Operation Constant
         };
 
         // This simply checks to see if the user typed either of the two termination commands
@@ -27,6 +27,22 @@ namespace SimpleCalculator
                 return true;
             } 
             return false;
+        }
+
+        public KeyValuePair<bool, string> CheckForLastCommands(string sentUserInputFromCommandPrompt)
+        {
+            if (sentUserInputFromCommandPrompt == "last")
+            {
+                return new KeyValuePair<bool, string> ( true, "last" );
+            }
+            else if (sentUserInputFromCommandPrompt == "lastq")
+            {
+                return new KeyValuePair<bool, string> (true, "lastq");
+            }
+            else
+            {
+                return new KeyValuePair<bool, string> (false, "");
+            }
         }
 
         // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.
