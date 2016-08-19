@@ -16,7 +16,7 @@ namespace SimpleCalculator
             string[] userIntegersAndOperation = { "", "", "", "" }; // returned in the format of First Integer, Operation and Second Integer
             string resultOfOperation = "     Nothing Yet!";
 
-            // Creates a new instance of the Expressions class to give non-static access to the methods
+            // Creates a new instance of the used classes to give non-static access to their methods
             Expressions newUserExpression = new Expressions();
             Evaluation newUserEvaluation = new Evaluation();
             LastEntries newUserLastEntry = new LastEntries();
@@ -29,8 +29,7 @@ namespace SimpleCalculator
                 // Checks to see if the user typed "exit" or "quit" and, if so, breaks out of the loop
                 if (newUserExpression.CheckIfUserWantsToExit(userInputFromCommandPrompt)) 
                 {
-                    Console.WriteLine("     Bye!!!");
-                    Console.WriteLine("     (Press Return to Exit)");
+                    Console.WriteLine("     Bye!!!\n     (Press Return to Exit)");
                     Console.ReadLine();
                     break;
                 }
@@ -51,29 +50,16 @@ namespace SimpleCalculator
                 }
 
                 // Looks to see if either of the last/lastq commands was issued
-                if (newUserExpression.CheckForLastCommands(userInputFromCommandPrompt).Key)
+                if (newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Key)
                 {
-                    switch (newUserExpression.CheckForLastCommands(userInputFromCommandPrompt).Value)
-                    {
-                        case "last":
-                            resultOfOperation = newUserLastEntry.last;
-                            break;
-                        case "lastq":
-                            resultOfOperation = $"     {newUserLastEntry.lastq}";
-                            break;
-                        default:
-                            resultOfOperation = "";
-                            break;
-                    }
+                    resultOfOperation = newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Value;
                 }
-
-                newUserExpression.CheckForLastCommands(userInputFromCommandPrompt);
-
-                // Assigns the submitted command to the "stack"
-                newUserLastEntry.lastq = userInputFromCommandPrompt;
-
-                // Assigns the evaluated operation to the "stack"
-                newUserLastEntry.last = resultOfOperation;
+                else
+                {
+                    // Assigns the submitted user operation, and reported commands to the "stack"
+                    //  This is an "else" so any "last" or "lastq" commands don't get pushed into the last "stack" 
+                    newUserLastEntry.SetLastCommandValues(userInputFromCommandPrompt, resultOfOperation);
+                }
 
                 Console.WriteLine(resultOfOperation);
             }
