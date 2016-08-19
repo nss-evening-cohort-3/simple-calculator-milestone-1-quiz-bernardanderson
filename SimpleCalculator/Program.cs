@@ -21,6 +21,7 @@ namespace SimpleCalculator
             Evaluation newUserEvaluation = new Evaluation();
             LastEntries newUserLastEntry = new LastEntries();
 
+            Console.WriteLine("Welcome to the simple calculator. Enter \"help\" for a list of commands.");
             while (true)
             {
                 Console.Write($"[{ currentCommandCount }]> ");
@@ -50,6 +51,18 @@ namespace SimpleCalculator
                 }
 
                 // Looks to see if either of the last/lastq commands was issued
+                if (newUserExpression.CheckIfUserWantsHelp(userInputFromCommandPrompt))
+                {
+                    string tempHelpString = "      This calculator handles basic math operations between two integers.\n";
+                    tempHelpString += "      Single letter constants can be set in the form letter = number (i.e. a=3).\n";
+                    tempHelpString += "      The command \"last\" will display the last displayed operation result.\n";
+                    tempHelpString += "      The command \"lastq\" will display the last operation entered by the user.\n";
+                    tempHelpString += "      To exit the program type \"exit\" or \"quit\".";
+
+                    resultOfOperation = tempHelpString;
+                }
+
+                // Looks to see if either of the last/lastq commands was issued
                 if (newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Key)
                 {
                     resultOfOperation = newUserLastEntry.CheckForLastCommands(userInputFromCommandPrompt).Value;
@@ -60,6 +73,8 @@ namespace SimpleCalculator
                     //  This is an "else" so any "last" or "lastq" commands don't get pushed into the last "stack" 
                     newUserLastEntry.SetLastCommandValues(userInputFromCommandPrompt, resultOfOperation);
                 }
+
+
                 Console.WriteLine(resultOfOperation);
             }
         }

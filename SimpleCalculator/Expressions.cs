@@ -25,6 +25,12 @@ namespace SimpleCalculator
             return new Regex(@"^\s*quit\s*$|^\s*exit\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success;
         }
 
+        // This simply checks to see if the user wants help
+        public bool CheckIfUserWantsHelp(string sentUserInputFromCommandPrompt)
+        {
+            return new Regex(@"^\s*help\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success;
+        }
+
         // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.
         //  If the match is made, the userInput is parsed and returned with a "success" or "failure" within a string array.
         public string[] CheckExpressionTypeAndParse(string sentUserInputFromCommandPrompt)
