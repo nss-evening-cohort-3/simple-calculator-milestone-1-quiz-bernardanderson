@@ -71,7 +71,7 @@ namespace SimpleCalculator
                 }
             }
 
-            if (new Regex(@"[\+\-\/\*%]").IsMatch(sentIntegerAndOperationInfo[2]))
+            if (new Regex(@"^[\+\-\/\*%]$").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
                 return $"     = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
