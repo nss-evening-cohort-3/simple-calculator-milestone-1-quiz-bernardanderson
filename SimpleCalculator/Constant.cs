@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class Constant
+    public class Constant
     {
         // Sets the private constant dictionary
-        Dictionary<string, int> constantList = new Dictionary<string, int>() { ["Spacer"] = -1 };
+        Dictionary<string, int> constantList = new Dictionary<string, int>() { ["spacer"] = 42 };
 
         // This checks to see if the constant already exists in the dictionary.  If it does, it returns "true" for success and
         //  the value in a KeyValuePair.  If it doesn't exist it says "false" meaning that the dictionary pull failed.

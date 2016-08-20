@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class Expressions
+    public class Expressions
     {
         // These are the lists of Regular Expressions for the different types of operation formats the user can enter
         string[] regularExpressions = new string[] {
@@ -23,6 +23,12 @@ namespace SimpleCalculator
         public bool CheckIfUserWantsToExit(string sentUserInputFromCommandPrompt)
         {
             return new Regex(@"^\s*quit\s*$|^\s*exit\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success;
+        }
+
+        // This simply checks to see if the user wants help
+        public bool CheckIfUserWantsHelp(string sentUserInputFromCommandPrompt)
+        {
+            return new Regex(@"^\s*help\s*$").Match(sentUserInputFromCommandPrompt.ToLower()).Success;
         }
 
         // This cycles through the RegEx's in the array above to see if a match can be made against the user entered command.

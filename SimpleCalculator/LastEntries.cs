@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class LastEntries
+    public class LastEntries
     {
-        string last { get; set; } = "     Nothing Yet!!";
+        string last { get; set; } = "Nothing Yet!!";
         string lastq { get; set; } = "Nothing Yet!!";
 
         // Looks to see if "last" or "lastq" were matched in the user string based on the RegEx below
