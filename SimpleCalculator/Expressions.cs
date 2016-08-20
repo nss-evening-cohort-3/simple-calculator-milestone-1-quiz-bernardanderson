@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class Expressions
+    public class Expressions
     {
         // These are the lists of Regular Expressions for the different types of operation formats the user can enter
         string[] regularExpressions = new string[] {
