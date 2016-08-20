@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class LastEntries
+    public class LastEntries
     {
         string last { get; set; } = "Nothing Yet!!";
         string lastq { get; set; } = "Nothing Yet!!";
