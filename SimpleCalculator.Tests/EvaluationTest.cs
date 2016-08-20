@@ -51,7 +51,7 @@ namespace SimpleCalculator.Tests
             Evaluation newTestEvaluation = new Evaluation();
 
             string[] validTestString1 = { "success", "a", "=", "1" }; // Sets "a" to 1
-            string[] validTestString2 = { "success", "a", "=", "-100" };  // Tries to set "a" to -100
+            string[] validTestString2 = { "success", "a", "=", "-100" };  // Tries to reset "a" to -100
 
         //act (nothing in this case)
 
@@ -60,7 +60,29 @@ namespace SimpleCalculator.Tests
         Assert.IsTrue(newTestEvaluation.CheckAndAssignSentStringArray(validTestString2).Contains("has previously been set"));
         }
 
-        //Add a test that checks firstInteger is valid/a constant/invalid
+        //  **** Start Here ****
+        [TestMethod]
+        public void Evaluation_IsTheFirstIntegerParsable()
+        {
+            //arrange (nothing in this case)
+            Evaluation newTestEvaluation = new Evaluation();
+            string[][] validTestStrings = {
+                new string[] { "success", "a", "=", "2" },
+                new string[] { "success", "b", "=", "32" },
+                new string[] { "success", "C", "=", "-32" },
+                new string[] { "success", "X", "=", "+32" },
+                new string[] { "success", "Z", "=", "1132" }
+            };
+
+            //act (nothing in this case)
+
+            //asserts
+            for (int i = 0; i < validTestStrings.Length; i++)
+            {
+                Assert.IsTrue(newTestEvaluation.CheckAndAssignSentStringArray(validTestStrings[i]).Contains("set to"));
+            }
+        }
+
         //Add a test that checks secondInteger is valid/a constant/invalid
         //Add a test that checks operation is valid/a constant/invalid
 
