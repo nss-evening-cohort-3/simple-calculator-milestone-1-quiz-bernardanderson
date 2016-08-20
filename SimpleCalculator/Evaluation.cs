@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    class Evaluation
+    public class Evaluation
     {
         Constant newUserConstant = new Constant();
 
@@ -105,7 +105,7 @@ namespace SimpleCalculator
                     evaluatedOperationValue = sentFirstInteger % sentSecondInteger;
                     break;
                 default:
-                    return "     Error!! Evaluation Failed!!";
+                    return "shouldNeverBeSeen";
             }
             return evaluatedOperationValue.ToString();
         }
