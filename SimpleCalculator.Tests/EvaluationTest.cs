@@ -150,6 +150,29 @@ namespace SimpleCalculator.Tests
                 Assert.AreEqual("     Error!! Invalid command format!!", newTestEvaluation.CheckAndAssignSentStringArray(incorrectOperators[i]));
             }
         }
+
+        // Check to see if the operator accessable and correctly handled (in this case "wrong" operators
+        [TestMethod]
+        public void Evaluation_CheckForDivideByZero()
+        {
+            //arrange (nothing in this case)
+            Evaluation newTestEvaluation = new Evaluation();
+
+            string[][] incorrectOperators = {
+                new string[] { "success", "10", "/", "0" },
+                new string[] { "success", "10", "%", "0" }
+            };
+
+            //act (nothing in this case)
+
+            //asserts
+            for (int i = 0; i < incorrectOperators.Length; i++)
+            {
+                Assert.AreEqual("     Cannot Divide By Zero", newTestEvaluation.CheckAndAssignSentStringArray(incorrectOperators[i]));
+            }
+        }
+
+
         // Checks to see that if the evaluation method returns the correct result
         [TestMethod]
         public void Evaluation_DoTheOperationsReturnCorrectMathResult()
