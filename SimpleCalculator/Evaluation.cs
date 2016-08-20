@@ -74,7 +74,17 @@ namespace SimpleCalculator
             if (new Regex(@"^[\+\-\/\*%]$").IsMatch(sentIntegerAndOperationInfo[2]))
             {
                 operationSymbol = sentIntegerAndOperationInfo[2][0];
-                return $"     = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
+
+                //Check for divide by zero
+                if ((operationSymbol == '/' || operationSymbol == '%') && (secondInteger == 0) )
+                {
+                    return "     Cannot Divide By Zero";
+                }
+                else
+                {
+                    return $"     = {Evaluate(operationSymbol, firstInteger, secondInteger)}";
+                }
+
             } 
             else
             {
